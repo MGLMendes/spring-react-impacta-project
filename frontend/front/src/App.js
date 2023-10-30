@@ -7,7 +7,13 @@ import { useEffect, useState } from 'react';
 
 function App() {
 
-  
+  // Objeto Produto
+  const produto = {
+    id : 0,
+    nome : '',
+    marca : ''
+  }
+
   // UseState
   const [btnCadastrar, setBtnCadastrar] = useState(true);
   const [produtos, setProdutos] = useState([]);
@@ -22,9 +28,8 @@ function App() {
   // Retorno
   return (
     <div>
-      <p>{JSON.stringify(produtos)}</p>
-      <Formulario botao={btnCadastrar}/>
-      <Tabela/>
+      <Formulario botao={btnCadastrar} />
+      <Tabela vetorProdutos={produtos} />
     </div>
   );
 }

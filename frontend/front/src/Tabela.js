@@ -1,4 +1,4 @@
-function Tabela() {
+function Tabela({vetorProdutos}) {
     return (
         <table className="table" >
             <thead>
@@ -11,12 +11,17 @@ function Tabela() {
             </thead>
 
             <tbody>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+            { 
+                vetorProdutos.map((produto, index) => (
+                    <tr key={index}>
+                        <td>{index+1}</td>
+                        <td>{produto.nome}</td>
+                        <td>{produto.marca}</td>
+                        <td><button className="btn btn-success">Selecionar</button></td>
+                    </tr>
+                ))
+                
+            }
             </tbody>
         </table>
     )
