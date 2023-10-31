@@ -6,6 +6,7 @@ import br.com.impacta.produtos.service.ProdutoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -15,7 +16,7 @@ public class ProdutoServiceImpl implements ProdutoService {
     private final ProdutoRepository produtoRepository;
 
     @Override
-    public Iterable<Produto> listar() {
+    public List<Produto> listar() {
         return produtoRepository.findAll();
     }
 
