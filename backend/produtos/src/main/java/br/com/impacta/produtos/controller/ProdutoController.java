@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -40,7 +41,7 @@ public class ProdutoController {
     }
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<ProdutoDTO> cadastrarProduto(@RequestBody ProdutoInput produto) {
+    public ResponseEntity<ProdutoDTO> cadastrarProduto(@RequestBody @Valid ProdutoInput produto) {
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(produtoDTODisassemble.copyEntityToDTO(
@@ -50,7 +51,7 @@ public class ProdutoController {
 
     @PutMapping("/atualizar/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void atualizarProduto(@RequestBody ProdutoInput produto, @PathVariable Long id) {
+    public void atualizarProduto(@RequestBody @Valid ProdutoInput produto, @PathVariable Long id) {
         produtoService.atualizar(produtoInputAssemble.copyInputToEntity(produto), id);
     }
 
