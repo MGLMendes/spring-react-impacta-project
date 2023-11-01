@@ -43,17 +43,97 @@ function App() {
     })
     .then(retorno => retorno.json())
     .then(retorno_convertido => {
-      setProdutos([...produtos, retorno_convertido]);
-      alert("Produto cadastrado com sucesso!")
+
+      if (retorno_convertido.status === 400) {
+        alert(retorno_convertido.detail)
+      } else {
+        setProdutos([...produtos, retorno_convertido]);
+        alert("Produto cadastrado com sucesso!")
+        limparFormulario()
+      }
     })
   };
+
+  // Remover Produto
+  const remover = () => {
+    console.log(objProduto)
+    fetch("http://localhost:8989/produtos/remover/"+objProduto.id, {
+      method: "delete",
+      headers: {
+        "Content-Type": "application/json", 
+        "Accept": "application/json"
+      }
+    })
+    .then(retorno => retorno.json())
+    .then(retorno_convertido => {
+
+      console.log(objProduto.id)
+      if (retorno_convertido.status === 200) {
+        alert("Produto excluído com sucesso")
+
+        let produtosTemp = [...produtos]
+        let index = produtosTemp.findIndex((prod) => {
+          return prod.id === objProduto.id
+        })
+
+        produtosTemp.splice(index, 1)
+
+        setProdutos(produtosTemp)
+        limparFormulario()
+      } else {
+        alert("Erro ao excluir produto")
+      }
+    })
+  };
+
+  // Atualizar Produto
+  const atualizar = () => {
+    fetch("http://localhost:8989/produtos/atualizar/"+objProduto.id, {
+      method: "put",
+      body: JSON.stringify(objProduto),
+      headers: {
+        "Content-Type": "application/json", 
+        "Accept": "application/json"
+      }
+    })
+    .then(retorno => retorno.json())
+    .then(retorno_convertido => {
+
+      if (retorno_convertido.status === 400) {
+        alert(retorno_convertido.detail)
+      } else {
+        alert("Produto atualiazado com sucesso!")
+        let produtosTemp = [...produtos]
+        let index = produtosTemp.findIndex((prod) => {
+          return prod.id === objProduto.id
+        })
+
+        produtosTemp[index] = objProduto
+
+        setProdutos(produtosTemp)
+        limparFormulario()
+      }
+    })
+  };
+
+  // Limpar formulário
+  const limparFormulario = () => {
+    setObjProduto(produto)
+    setBtnCadastrar(true)
+  }
+
+  // Selecionar Produto
+  const selecionarProduto = (indice) => {
+    console.log(produtos[indice])
+    setObjProduto(produtos[indice])
+    setBtnCadastrar(false)
+  }
 
   // Retorno
   return (
     <div>
-      
-      <Formulario botao={btnCadastrar} eventoTeclado={aoDigitar} cadastrar={cadastrar} />
-      <Tabela vetorProdutos={produtos} />
+      <Formulario botao={btnCadastrar} eventoTeclado={aoDigitar} cadastrar={cadastrar} obj={objProduto} cancelar={limparFormulario} remover={remover} atualizar={atualizar}/>
+      <Tabela vetorProdutos={produtos} selecionar={selecionarProduto}/>
     </div>
   );
 }

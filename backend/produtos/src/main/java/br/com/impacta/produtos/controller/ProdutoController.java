@@ -50,14 +50,20 @@ public class ProdutoController {
     }
 
     @PutMapping("/atualizar/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void atualizarProduto(@RequestBody @Valid ProdutoInput produto, @PathVariable Long id) {
-        produtoService.atualizar(produtoInputAssemble.copyInputToEntity(produto), id);
+    public ResponseEntity<ProdutoDTO> atualizarProduto(@RequestBody @Valid ProdutoInput produto, @PathVariable Long id) {
+        return ResponseEntity.ok(
+                produtoDTODisassemble.copyEntityToDTO(produtoService.atualizar(
+                        produtoInputAssemble.copyInputToEntity(produto), id)));
     }
 
     @DeleteMapping("/remover/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void removerProduto(@PathVariable Long id) {
-        produtoService.remover(id);
+    public ResponseEntity<HttpStatus> removerProduto(@PathVariable Long id) {
+        try {
+            produtoService.remover(id);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 }

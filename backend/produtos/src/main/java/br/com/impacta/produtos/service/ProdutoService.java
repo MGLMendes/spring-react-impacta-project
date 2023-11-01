@@ -11,7 +11,7 @@ public interface ProdutoService {
 
     Produto cadastrar(Produto produto);
 
-    void atualizar(Produto produto, Long id);
+    Produto atualizar(Produto produto, Long id);
 
     void remover(Long id);
 }

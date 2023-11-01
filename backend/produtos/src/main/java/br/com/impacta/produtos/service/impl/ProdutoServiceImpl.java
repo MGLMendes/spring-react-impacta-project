@@ -26,7 +26,7 @@ public class ProdutoServiceImpl implements ProdutoService {
     }
 
     @Override
-    public void atualizar(Produto produto, Long id) {
+    public Produto atualizar(Produto produto, Long id) {
 
         Optional<Produto> produtoById = produtoRepository.findById(id);
 
@@ -35,8 +35,9 @@ public class ProdutoServiceImpl implements ProdutoService {
             produtoById.get().setNome(produto.getNome());
             produtoById.get().setMarca(produto.getMarca());
 
-             produtoRepository.save(produtoById.get());
+             return produtoRepository.save(produtoById.get());
         }
+        return null;
     }
 
     @Override
