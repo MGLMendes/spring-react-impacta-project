@@ -67,8 +67,8 @@ function App() {
     .then(retorno => retorno.json())
     .then(retorno_convertido => {
 
-      console.log(objProduto.id)
-      if (retorno_convertido.status === 200) {
+      console.log(retorno_convertido)
+      if (retorno_convertido.mensagem === "Deu certo") {
         alert("Produto excluído com sucesso")
 
         let produtosTemp = [...produtos]

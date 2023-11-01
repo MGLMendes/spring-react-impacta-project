@@ -2,6 +2,7 @@ package br.com.impacta.produtos.controller;
 
 import br.com.impacta.produtos.assemble.ProdutoInputAssemble;
 import br.com.impacta.produtos.disassemble.ProdutoDTODisassemble;
+import br.com.impacta.produtos.model.dto.MensagemDTO;
 import br.com.impacta.produtos.model.dto.ProdutoDTO;
 import br.com.impacta.produtos.model.input.ProdutoInput;
 import br.com.impacta.produtos.service.ProdutoService;
@@ -57,13 +58,13 @@ public class ProdutoController {
     }
 
     @DeleteMapping("/remover/{id}")
-    public ResponseEntity<HttpStatus> removerProduto(@PathVariable Long id) {
+    public ResponseEntity<MensagemDTO> removerProduto(@PathVariable Long id) {
         try {
             produtoService.remover(id);
-            return ResponseEntity.status(HttpStatus.OK).build();
+            return ResponseEntity.status(HttpStatus.OK).body(new MensagemDTO("Deu certo"));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MensagemDTO("Deu errado"));
     }
 }
