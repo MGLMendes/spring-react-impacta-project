@@ -1,7 +1,7 @@
 
 import './App.css';
 import Formulario from './Formulario';
-import Tabela from './Tabela';
+import VisualizarProd from './VisualizarProd';
 
 import { useEffect, useState } from 'react';
 
@@ -133,7 +133,7 @@ function App() {
   return (
     <div>
       <Formulario botao={btnCadastrar} eventoTeclado={aoDigitar} cadastrar={cadastrar} obj={objProduto} cancelar={limparFormulario} remover={remover} atualizar={atualizar}/>
-      <Tabela vetorProdutos={produtos} selecionar={selecionarProduto}/>
+      <VisualizarProd vetorProdutos={produtos} selecionar={selecionarProduto}/>
     </div>
   );
 }
